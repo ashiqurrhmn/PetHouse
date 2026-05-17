@@ -37,7 +37,7 @@ const Navbar = () => {
           : "sticky top-0 z-50 border-b bg-[#fb756309]"
       }
     >
-      <nav className="relative mx-auto flex w-11/12 items-center justify-between py-2 md:py-3">
+      <nav className="relative mx-auto flex w-11/12 items-center justify-between md:py-3">
         <div>
           <Link href="/">
             <Image
