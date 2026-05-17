@@ -25,7 +25,7 @@ const reasons = [
 
 const WhyAdopt = () => {
   return (
-    <section className="mx-auto w-11/12 py-16 md:w-9/12 my-20">
+    <section className="mx-auto w-11/12 md:w-9/12 my-30">
       <div className="mx-auto max-w-3xl text-center mb-10">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Why Adopt Pets

@@ -25,7 +25,7 @@ const stories = [
 
 const SuccessStories = () => {
   return (
-    <section className="bg-[#efe8d470] py-20">
+    <section className="bg-[#efe8d470] py-30">
       <div className="mx-auto w-11/12 md:w-9/12">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
