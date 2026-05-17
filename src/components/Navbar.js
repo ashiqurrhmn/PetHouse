@@ -19,7 +19,7 @@ const Navbar = () => {
       : "hover:underline hover:decoration-[#fb7563ea] hover:underline-offset-4";
 
   return (
-    <div className="border-b">
+    <div className="border-b bg-[#fb756309]">
       <nav className="relative mx-auto flex w-11/12 items-center justify-between py-2">
         <div>
           <Link href="/">
