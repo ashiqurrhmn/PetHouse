@@ -30,10 +30,10 @@ const WhyAdopt = () => {
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Why Adopt Pets
         </p>
-        <h2 className="mt-3 text-3xl font-bold text-gray-900 md:text-4xl">
+        <h2 className="mt-3 text-3xl font-bold text-[#2e2804]  md:text-4xl">
           A Small Adoption Choice, A Big Life Change
         </h2>
-        <p className="mt-4 text-gray-600">
+        <p className="mt-4 text-[#2e2804c4] ">
           Adoption creates a meaningful bond and gives a deserving companion the loving home they
           always needed.
         </p>
@@ -51,8 +51,8 @@ const WhyAdopt = () => {
                   {reason.icon}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{reason.title}</h3>
-                  <p className="mt-1 text-sm text-gray-600">{reason.description}</p>
+                  <h3 className="font-semibold text-[#2e2804]">{reason.title}</h3>
+                  <p className="mt-1 text-sm text-[#2e2804c4]">{reason.description}</p>
                 </div>
               </div>
             ))}
@@ -60,7 +60,7 @@ const WhyAdopt = () => {
         </div>
 
         <div className="relative order-1 mx-auto mt-10 w-full max-w-lg lg:order-2">
-          <div className="absolute -left-4 -top-4 h-full w-full rounded-lg bg-[#fb75631f]" />
+          <div className="absolute -left-4 -top-4 h-full w-full rounded-lg bg-[#efe8d470]" />
           <Image
             src="/assets/cat1.jpg"
             alt="Cute adopted cat"

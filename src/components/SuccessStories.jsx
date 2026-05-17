@@ -25,13 +25,13 @@ const stories = [
 
 const SuccessStories = () => {
   return (
-    <section className="bg-[#fff6f3] py-20">
+    <section className="bg-[#efe8d470] py-20">
       <div className="mx-auto w-11/12 md:w-9/12">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
             Success Stories
           </p>
-          <h2 className="mt-3 text-3xl font-bold text-gray-900 md:text-4xl">
+          <h2 className="mt-3 text-3xl font-bold text-[#2e2804] md:text-4xl">
             Happy Endings From PetHouse Families
           </h2>
         </div>
@@ -53,7 +53,7 @@ const SuccessStories = () => {
               </div>
               <div className="p-5">
                 <div className="flex items-center justify-between gap-3">
-                  <h3 className="text-lg font-semibold text-gray-900">{story.name}</h3>
+                  <h3 className="text-lg font-semibold text-[#2e2804] ">{story.name}</h3>
                   <div className="flex text-sm text-[#ffbb00ea]" aria-label={`${story.rating} stars`}>
                     {Array.from({ length: 5 }).map((_, index) => (
                       <FaStar
