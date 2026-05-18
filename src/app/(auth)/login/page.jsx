@@ -1,23 +1,29 @@
-import { LogIn } from "lucide-react";
+"use client";
+
+import { useState } from "react";
+import { Eye, EyeOff, LogIn } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FaPaw } from "react-icons/fa";
 
 export default function LoginPage() {
+  const [showPassword, setShowPassword] = useState(false);
+
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-[#fff7f4] via-[#fffdfb] to-[#fff7ef] px-4 dark:from-[#151312] dark:via-[#191715] dark:to-[#141312] py-25">
       <div className="pointer-events-none absolute -left-16 top-24 h-64 w-64 rounded-full bg-[#fb756336] blur-3xl" />
       <div className="pointer-events-none absolute -right-24 bottom-20 h-72 w-72 rounded-full bg-[#facc1533] blur-3xl" />
 
       <div className="relative mx-auto grid w-full max-w-6xl items-stretch overflow-hidden rounded-3xl border border-[#00000010] bg-white/80 shadow-2xl backdrop-blur-sm dark:border-white/10 dark:bg-[#1f1c19]/85 lg:grid-cols-2">
-        <div className="relative hidden min-h-[560px] p-8 lg:block">
+        <div className="relative hidden min-h-140 p-8 lg:block">
           <Image
             src="/assets/loginCat.jpg"
             alt="Friendly pet waiting for adoption"
             fill
+            sizes="(min-width: 1024px) 25vw, (min-width: 768px) 40vw, 90vw"
             className="object-cover"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent" />
+          <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/25 to-transparent" />
           <div className="absolute bottom-8 left-8 right-8 text-white">
             <p className="mb-2 inline-flex items-center gap-2 rounded-full bg-white/15 px-3 py-1 text-sm backdrop-blur-sm">
               <FaPaw className="text-[#ffd166]" /> Welcome Back
@@ -55,7 +61,7 @@ export default function LoginPage() {
               />
             </div>
 
-            <div>
+            <div className="relative">
               <div className="mb-1 flex items-center justify-between">
                 <label
                   htmlFor="password"
@@ -66,10 +72,18 @@ export default function LoginPage() {
               </div>
               <input
                 id="password"
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                className="w-full rounded-xl border border-[#d7cbc2] bg-white px-4 py-3 text-sm text-[#2b241f] outline-none transition focus:border-[#fb7563] focus:ring-2 focus:ring-[#fb756340] dark:border-[#3a332e] dark:bg-[#25211e] dark:text-[#f9f4ef]"
+                className="w-full rounded-xl border border-[#d7cbc2] bg-white px-4 py-3 pr-12 text-sm text-[#2b241f] outline-none transition focus:border-[#fb7563] focus:ring-2 focus:ring-[#fb756340] dark:border-[#3a332e] dark:bg-[#25211e] dark:text-[#f9f4ef]"
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword((prev) => !prev)}
+                className="absolute right-3 top-9.75 rounded-md p-1 text-[#7a6d64] transition hover:text-[#3a332e] dark:text-[#b7a89d] dark:hover:text-[#f9f4ef]"
+                aria-label={showPassword ? "Hide password" : "Show password"}
+              >
+                {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+              </button>
             </div>
 
             <button

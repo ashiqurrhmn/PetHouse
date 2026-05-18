@@ -68,7 +68,7 @@ const Navbar = () => {
               src="/assets/logo1.png"
               alt="PetHouse Logo"
               width={150}
-              height={10}
+              height={100}
             />
           </Link>
         </div>
