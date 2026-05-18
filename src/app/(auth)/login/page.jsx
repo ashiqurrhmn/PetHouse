@@ -55,6 +55,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
                 placeholder="you@example.com"
                 className="w-full rounded-xl border border-[#d7cbc2] bg-white px-4 py-3 text-sm text-[#2b241f] outline-none transition focus:border-[#fb7563] focus:ring-2 focus:ring-[#fb756340] dark:border-[#3a332e] dark:bg-[#25211e] dark:text-[#f9f4ef]"
@@ -72,6 +73,7 @@ export default function LoginPage() {
               </div>
               <input
                 id="password"
+                name="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
                 className="w-full rounded-xl border border-[#d7cbc2] bg-white px-4 py-3 pr-12 text-sm text-[#2b241f] outline-none transition focus:border-[#fb7563] focus:ring-2 focus:ring-[#fb756340] dark:border-[#3a332e] dark:bg-[#25211e] dark:text-[#f9f4ef]"
