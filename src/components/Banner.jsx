@@ -59,7 +59,7 @@ const Banner = () => {
               className="object-cover"
               priority={slide.image === "/assets/banner3.png"}
             />
-            <div className="absolute inset-0 bg-linear-to-r from-black/70 via-black/35 to-black/10" />
+            <div className="absolute inset-0 bg-linear-to-r from-black/35 via-black/25 to-black/15 dark:from-black/65 dark:via-black/45 dark:to-black/35" />
 
             <div className="absolute inset-0 mx-auto flex w-9/12 items-center pt-16 md:pt-20">
               <div className="max-w-2xl text-white">
@@ -71,7 +71,7 @@ const Banner = () => {
                 </p>
                 <Link
                   href="/all-pets"
-                  className="inline-block mt-8 rounded-lg bg-[#fb7563ea] px-7 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#f95f49] md:text-base"
+                  className="mt-8 inline-block rounded-lg bg-[#fb7563ea] px-7 py-3 text-sm font-semibold text-white shadow-md transition hover:bg-[#f95f49] md:text-base"
                 >
                   <span className="flex items-center gap-2">
                     Adopt Now <GiCat />
@@ -87,7 +87,7 @@ const Banner = () => {
         type="button"
         onClick={prevSlide}
         aria-label="Previous slide"
-        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/85 p-2 text-gray-800 shadow transition hover:bg-white"
+        className="absolute left-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/85 p-2 text-gray-800 shadow transition hover:bg-white dark:bg-[#161616]/85 dark:text-gray-100 dark:hover:bg-[#242424]"
       >
         <FiChevronLeft className="text-2xl" />
       </button>
@@ -96,7 +96,7 @@ const Banner = () => {
         type="button"
         onClick={nextSlide}
         aria-label="Next slide"
-        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/85 p-2 text-gray-800 shadow transition hover:bg-white"
+        className="absolute right-4 top-1/2 z-20 -translate-y-1/2 rounded-full bg-white/85 p-2 text-gray-800 shadow transition hover:bg-white dark:bg-[#161616]/85 dark:text-gray-100 dark:hover:bg-[#242424]"
       >
         <FiChevronRight className="text-2xl" />
       </button>

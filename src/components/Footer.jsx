@@ -8,17 +8,18 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-14 border-t border-[#fb756340] bg-[#2e2804] text-white">
+    <footer className="mt-14 border-t border-[#fb756340] bg-[#efe8d470] text-[#2e2804] dark:bg-[#1b1b1b] dark:text-[#f8f4ea]">
       <div className="mx-auto w-11/12 py-12">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Image className="bg-[#efe8d470] rounded-full"
+            <Image
+              className="rounded-full bg-[#efe8d470]"
               src="/assets/logo1.png"
               alt="PetHouse Logo"
               width={200}
               height={100}
             />
-            <p className="mt-3 max-w-xs text-sm leading-6 ">
+            <p className="mt-3 max-w-xs text-sm leading-6 text-[#2e2804cc] dark:text-[#e5dfd2cc]">
               Helping loving families find their perfect pets with safe adoption and caring support.
             </p>
             <div className="mt-5 flex items-center gap-3">
@@ -48,7 +49,7 @@ const Footer = () => {
 
           <div>
             <h3 className="text-lg font-semibold">Quick Links</h3>
-            <ul className="mt-4 space-y-2 text-sm ">
+            <ul className="mt-4 space-y-2 text-sm">
               <li>
                 <Link className="transition hover:text-[#fb7563ea]" href="/">
                   Home
@@ -117,7 +118,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-10 border-t border-[#fb756340] pt-5 text-center text-sm">
+        <div className="mt-10 border-t border-[#fb756340] pt-5 text-center text-sm text-[#2e2804cc] dark:text-[#e5dfd2cc]">
           <p>&copy; {year} PetHouse. All rights reserved.</p>
         </div>
       </div>

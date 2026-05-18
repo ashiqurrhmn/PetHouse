@@ -25,15 +25,15 @@ const reasons = [
 
 const WhyAdopt = () => {
   return (
-    <section className="mx-auto w-11/12 md:w-9/12 my-30">
-      <div className="mx-auto max-w-3xl text-center mb-10">
+    <section className="mx-auto my-30 w-11/12 md:w-9/12">
+      <div className="mx-auto mb-10 max-w-3xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Why Adopt Pets
         </p>
-        <h2 className="mt-3 text-3xl font-bold text-[#2e2804]  md:text-4xl">
+        <h2 className="mt-3 text-3xl font-bold text-[#2e2804] dark:text-[#f8f4ea] md:text-4xl">
           A Small Adoption Choice, A Big Life Change
         </h2>
-        <p className="mt-4 text-[#2e2804c4] ">
+        <p className="mt-4 text-[#2e2804c4] dark:text-[#e5dfd2cc]">
           Adoption creates a meaningful bond and gives a deserving companion the loving home they
           always needed.
         </p>
@@ -44,15 +44,15 @@ const WhyAdopt = () => {
           <div className="mt-8 space-y-4">
             {reasons.map((reason) => (
               <div
-                className="flex gap-4 rounded-lg border border-[#fb75632a] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+                className="flex gap-4 rounded-lg border border-[#fb75632a] bg-white p-5 shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-[#fb75634d] dark:bg-[#1b1b1b]"
                 key={reason.title}
               >
                 <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#fb75631a]">
                   {reason.icon}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#2e2804]">{reason.title}</h3>
-                  <p className="mt-1 text-sm text-[#2e2804c4]">{reason.description}</p>
+                  <h3 className="font-semibold text-[#2e2804] dark:text-[#f8f4ea]">{reason.title}</h3>
+                  <p className="mt-1 text-sm text-[#2e2804c4] dark:text-[#e5dfd2cc]">{reason.description}</p>
                 </div>
               </div>
             ))}
@@ -60,13 +60,13 @@ const WhyAdopt = () => {
         </div>
 
         <div className="relative order-1 mx-auto mt-10 w-full max-w-lg lg:order-2">
-          <div className="absolute -left-4 -top-4 h-full w-full rounded-lg bg-[#efe8d470]" />
+          <div className="absolute -left-4 -top-4 h-full w-full rounded-lg bg-[#efe8d470] dark:bg-[#2e2a20]" />
           <Image
             src="/assets/cat1.jpg"
             alt="Cute adopted cat"
             width={640}
             height={500}
-            className="relative w-full h-120 rounded-lg object-cover object-center shadow-lg"
+            className="relative h-120 w-full rounded-lg object-cover object-center shadow-lg"
           />
         </div>
       </div>

@@ -20,12 +20,12 @@ const steps = [
 
 const AdoptionJourney = () => {
   return (
-    <section className="mx-auto w-11/12 my-30 md:w-9/12">
+    <section className="mx-auto my-30 w-11/12 md:w-9/12">
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Adoption Journey
         </p>
-        <h2 className="mt-3 text-3xl font-bold text-[#2e2804]  md:text-4xl">
+        <h2 className="mt-3 text-3xl font-bold text-[#2e2804] dark:text-[#f8f4ea] md:text-4xl">
           Three Simple Steps To Adopt
         </h2>
       </div>
@@ -33,14 +33,14 @@ const AdoptionJourney = () => {
       <div className="mt-10 grid gap-6 md:grid-cols-3">
         {steps.map((step) => (
           <article
-            className="relative rounded-lg border border-[#fb756326] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md"
+            className="relative rounded-lg border border-[#fb756326] bg-white p-6 text-center shadow-sm transition hover:-translate-y-1 hover:shadow-md dark:border-[#fb75634d] dark:bg-[#1b1b1b]"
             key={step.number}
           >
             <p className="mx-auto flex h-14 w-14 items-center justify-center rounded-lg bg-[#fb7563ea] text-xl font-extrabold text-white">
               {step.number}
             </p>
-            <h3 className="mt-3 text-xl font-semibold text-[#2e2804]">{step.title}</h3>
-            <p className="mt-2 text-sm text-gray-600">{step.text}</p>
+            <h3 className="mt-3 text-xl font-semibold text-[#2e2804] dark:text-[#f8f4ea]">{step.title}</h3>
+            <p className="mt-2 text-sm text-gray-600 dark:text-gray-300">{step.text}</p>
           </article>
         ))}
       </div>
