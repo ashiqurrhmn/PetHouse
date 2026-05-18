@@ -12,26 +12,31 @@ import { redirect } from "next/navigation";
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
 
-   const handleSubmit = async (e) => {
-      e.preventDefault();
-  
-      const formData = new FormData(e.currentTarget);
-      const user = Object.fromEntries(formData.entries());
-  
-      const { data, error } = await authClient.signIn.email({
-        email: user.email,
-        password: user.password,
-      });
-      if(data){
-        toast.success("Login successful! Welcome back to PetHouse.");
-        redirect('/'); 
-      }
-      if (error) {
-        toast.error(error.message);
-        return;
-      }
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-    };
+    const formData = new FormData(e.currentTarget);
+    const user = Object.fromEntries(formData.entries());
+
+    const { data, error } = await authClient.signIn.email({
+      email: user.email,
+      password: user.password,
+    });
+    if (data) {
+      toast.success("Login successful! Welcome back to PetHouse.");
+      redirect("/");
+    }
+    if (error) {
+      toast.error(error.message);
+      return;
+    }
+  };
+
+  const handleGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+  };
 
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-[#fff7f4] via-[#fffdfb] to-[#fff7ef] px-4 dark:from-[#151312] dark:via-[#191715] dark:to-[#141312] py-25">
@@ -116,7 +121,10 @@ export default function LoginPage() {
               type="submit"
               className="mt-3 w-full rounded-xl bg-[#fb7563] px-4 py-3 text-sm font-bold text-white transition hover:bg-[#f95f49] flex items-center justify-center gap-1"
             >
-              Log In <span><LogIn size={16} strokeWidth={2.5} /></span>
+              Log In{" "}
+              <span>
+                <LogIn size={16} strokeWidth={2.5} />
+              </span>
             </button>
 
             <div className="flex items-center gap-3 pt-2">
@@ -128,14 +136,27 @@ export default function LoginPage() {
             </div>
 
             <button
+              onClick={handleGoogle}
               type="button"
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#d7cbc2] bg-white px-4 py-3 text-sm font-semibold text-[#2b241f] transition hover:bg-[#fff8f4] dark:border-[#3a332e] dark:bg-[#25211e] dark:text-[#f9f4ef] dark:hover:bg-[#2d2824]"
             >
               <svg viewBox="0 0 48 48" className="h-5 w-5" aria-hidden="true">
-                <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C34 6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z" />
-                <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15 19 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C34 6 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z" />
-                <path fill="#4CAF50" d="M24 44c5.2 0 9.8-2 13.3-5.2l-6.1-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.6 5.1C9.6 39.6 16.2 44 24 44z" />
-                <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3-3.2 5.3-6.1 6.8l6.1 5.2C38.9 36.7 44 31 44 24c0-1.3-.1-2.4-.4-3.5z" />
+                <path
+                  fill="#FFC107"
+                  d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C34 6 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.4-.4-3.5z"
+                />
+                <path
+                  fill="#FF3D00"
+                  d="M6.3 14.7l6.6 4.8C14.7 15 19 12 24 12c3 0 5.7 1.1 7.8 2.9l5.7-5.7C34 6 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"
+                />
+                <path
+                  fill="#4CAF50"
+                  d="M24 44c5.2 0 9.8-2 13.3-5.2l-6.1-5.2C29.2 35.1 26.7 36 24 36c-5.2 0-9.6-3.3-11.2-8l-6.6 5.1C9.6 39.6 16.2 44 24 44z"
+                />
+                <path
+                  fill="#1976D2"
+                  d="M43.6 20.5H42V20H24v8h11.3c-1.1 3-3.2 5.3-6.1 6.8l6.1 5.2C38.9 36.7 44 31 44 24c0-1.3-.1-2.4-.4-3.5z"
+                />
               </svg>
               Sign in with Google
             </button>

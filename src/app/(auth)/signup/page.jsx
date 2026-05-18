@@ -31,9 +31,9 @@ export default function SignUpPage() {
       name: user.name,
       image: user.photoUrl || undefined,
     });
-    if(data){
+    if (data) {
       toast.success("Account created successfully! Welcome to PetHouse.");
-      redirect('/'); 
+      redirect("/");
     }
     if (error) {
       toast.error(error.message);
@@ -41,6 +41,13 @@ export default function SignUpPage() {
     }
 
     console.log({ data, error });
+  };
+
+  const handleGoogle = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+    });
+    
   };
 
   return (
@@ -179,6 +186,7 @@ export default function SignUpPage() {
             </div>
 
             <button
+              onClick={handleGoogle}
               type="button"
               className="flex w-full items-center justify-center gap-3 rounded-xl border border-[#d7cbc2] bg-white px-4 py-2.5 text-sm font-semibold text-[#2b241f] transition hover:bg-[#fff8f4] dark:border-[#3a332e] dark:bg-[#25211e] dark:text-[#f9f4ef] dark:hover:bg-[#2d2824]"
             >
