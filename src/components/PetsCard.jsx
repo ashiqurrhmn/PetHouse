@@ -14,7 +14,7 @@ const PetsCard = ({ pet }) => {
           fill
           unoptimized
           sizes="(min-width: 1024px) 40vw, 100vw"
-          className="object-cover transition duration-500 group-hover:scale-105"
+          className="object-cover  transition duration-500 group-hover:scale-105"
         />
 
         <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#2e2804]">
@@ -60,7 +60,7 @@ const PetsCard = ({ pet }) => {
         <div className="grid grid-cols-2 gap-3 border-t border-[#ece4df] pt-4 dark:border-[#35302d]">
           <button
             type="button"
-            className="h-11 rounded-full border border-[#d6cbc6] bg-white text-sm font-semibold text-[#2e2804] transition hover:border-[#fb756380] hover:bg-[#fff8f5] dark:border-[#4b5563] dark:bg-transparent dark:text-[#f8f4ea]"
+            className="h-11 rounded-full border border-[#d6cbc6] bg-white text-sm font-semibold text-[#2e2804] transition hover:border-[#fb756380]  dark:border-[#4b5563] dark:bg-transparent dark:text-[#f8f4ea]"
           >
             View Details
           </button>
