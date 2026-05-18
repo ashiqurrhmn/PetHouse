@@ -5,11 +5,10 @@ import { Cat } from "lucide-react";
 
 const FeaturedPets = async () => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/pets?featured=true`,
+    `${process.env.NEXT_PUBLIC_API_URL}/featured?featured=true`,
   );
   const data = await res.json();
 
-  const featuredPets = data.slice(0, 6);
   return (
     <div className="w-9/12 mx-auto mt-30 bg-[#efe8d470] dark:bg-[#1c1c1c] p-10 rounded-2xl">
       <div className="mx-auto max-w-3xl text-center">
@@ -21,7 +20,7 @@ const FeaturedPets = async () => {
         </h2>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
-        {featuredPets.map((pet) => (
+        {data.map((pet) => (
           <PetsCard key={pet._id} pet={pet} />
         ))}
       </div>
