@@ -58,7 +58,7 @@ const Navbar = () => {
           ? isScrolled
             ? "fixed left-0 right-0 top-0 z-50 border-b border-black/10 bg-white/75 backdrop-blur-[10px] dark:border-white/10 dark:bg-[#121212cc]"
             : "absolute left-0 right-0 top-0 z-50 border-b border-black/10 bg-white/40 backdrop-blur-[10px] dark:border-white/10 dark:bg-[#12121299]"
-          : "sticky top-0 z-50 border-b border-black/10 bg-[#fff8f5] dark:border-white/10 dark:bg-[#171717]"
+          : "sticky left-0 right-0 top-0 z-50 border-b border-black/10 bg-white/75 backdrop-blur-[10px] dark:border-white/10 dark:bg-[#121212cc]"
       }
     >
       <nav className="relative mx-auto flex w-11/12 items-center justify-between md:py-3">
