@@ -4,10 +4,34 @@ import { useState } from "react";
 import { Eye, EyeOff, LogIn } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "react-toastify";
 import { FaPaw } from "react-icons/fa";
+import { authClient } from "@/app/lib/auth-client";
+import { redirect } from "next/navigation";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
+
+   const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData(e.currentTarget);
+      const user = Object.fromEntries(formData.entries());
+  
+      const { data, error } = await authClient.signIn.email({
+        email: user.email,
+        password: user.password,
+      });
+      if(data){
+        toast.success("Login successful! Welcome back to PetHouse.");
+        redirect('/'); 
+      }
+      if (error) {
+        toast.error(error.message);
+        return;
+      }
+
+    };
 
   return (
     <section className="relative overflow-hidden bg-linear-to-b from-[#fff7f4] via-[#fffdfb] to-[#fff7ef] px-4 dark:from-[#151312] dark:via-[#191715] dark:to-[#141312] py-25">
@@ -45,7 +69,7 @@ export default function LoginPage() {
             Track applications, save favorite pets, and manage adoption updates.
           </p>
 
-          <form className="mt-8 space-y-4">
+          <form onSubmit={handleSubmit} className="mt-8 space-y-4">
             <div>
               <label
                 htmlFor="email"

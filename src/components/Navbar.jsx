@@ -9,7 +9,7 @@ import { FaCat } from "react-icons/fa";
 import { FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
 import { LuDog } from "react-icons/lu";
 import { authClient } from "@/app/lib/auth-client";
-import { Avatar, Dropdown, Label } from "@heroui/react";
+import { Avatar, Button, Dropdown, Label } from "@heroui/react";
 import { ArrowRightFromSquare, Gear, Persons } from "@gravity-ui/icons";
 import { ArrowDownToLine, LogOut } from "lucide-react";
 
@@ -26,7 +26,10 @@ const Navbar = () => {
   } = authClient.useSession();
 
   const user = session?.user;
-  console.log(user);
+
+  const handleLogout = async () => {
+      await authClient.signOut();
+  };
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 24);
@@ -143,6 +146,7 @@ const Navbar = () => {
                       </Dropdown.Item>
 
                       <Dropdown.Item
+                      onClick={handleLogout}
                         id="logout"
                         textValue="Logout"
                         variant="danger"
@@ -233,6 +237,7 @@ const Navbar = () => {
                       </Dropdown.Item>
 
                       <Dropdown.Item
+                      onClick={handleLogout}
                         id="logout"
                         textValue="Logout"
                         variant="danger"
@@ -287,13 +292,14 @@ const Navbar = () => {
                     </Link>
                   </li>
                   <li className={navLink("/logout")}>
-                    <Link
+                    <button
+                    onClick={handleLogout}
                       href="/logout"
                       className="flex items-center gap-1"
-                      onClick={() => setIsMenuOpen(false)}
+                      
                     >
                       Log Out
-                    </Link>
+                    </button>
                   </li>
                 </>
               ) : (

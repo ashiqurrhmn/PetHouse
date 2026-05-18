@@ -19,7 +19,6 @@ export default function SignUpPage() {
 
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
-    console.log(user);
 
     if (user.password !== user.confirmPassword) {
       toast.error("Passwords do not match");
@@ -33,7 +32,8 @@ export default function SignUpPage() {
       image: user.photoUrl || undefined,
     });
     if(data){
-      redirect('/login');
+      toast.success("Account created successfully! Welcome to PetHouse.");
+      redirect('/'); 
     }
     if (error) {
       toast.error(error.message);
