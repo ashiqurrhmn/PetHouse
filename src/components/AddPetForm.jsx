@@ -64,11 +64,14 @@ const AddPetForm = () => {
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
 
+    const {data:tokenData} = await authClient.token();
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
         },
         body: JSON.stringify(user),
       });

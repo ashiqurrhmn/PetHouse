@@ -1,10 +1,16 @@
 import Image from "next/image";
 import React from "react";
-import { Heart, MapPin, PawPrint, ShieldCheck, Syringe, Wallet } from "lucide-react";
+import {
+  Heart,
+  MapPin,
+  PawPrint,
+  ShieldCheck,
+  Syringe,
+  Wallet,
+} from "lucide-react";
 import Link from "next/link";
 
 const PetsCard = ({ pet }) => {
-
   return (
     <article className="group mb-7 overflow-hidden rounded-3xl border border-[#fb756326] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-[#fb75634d] dark:bg-[#1c1c1c]">
       <div className="relative h-80 w-full overflow-hidden">
@@ -53,21 +59,24 @@ const PetsCard = ({ pet }) => {
             <Wallet size={16} className="text-[#fb7563ea]" />${pet.adoptionFee}{" "}
             adoption fee
           </p>
-        
         </div>
 
-
         <div className="grid grid-cols-2 gap-3 border-t border-[#ece4df] pt-4 dark:border-[#35302d]">
-          <Link href={`/all-pets/${pet._id}`} className="h-11 text-center flex justify-center items-center rounded-full border border-[#d6cbc6] bg-white text-sm font-semibold text-[#2e2804] transition hover:border-[#fb756380]  dark:border-[#4b5563] dark:bg-transparent dark:text-[#f8f4ea]">
-        
+          <Link
+            href={`/all-pets/${pet._id}`}
+            className="h-11 text-center flex justify-center items-center rounded-full border border-[#d6cbc6] bg-white text-sm font-semibold text-[#2e2804] transition hover:border-[#fb756380]  dark:border-[#4b5563] dark:bg-transparent dark:text-[#f8f4ea]"
+          >
             View Details
           </Link>
-          <button
-            type="button"
+          <Link
+            href={`/all-pets/${pet._id}`}
             className="h-11 flex items-center justify-center gap-2 rounded-full bg-[#fb7563ea]  text-sm font-bold text-white shadow-sm transition hover:bg-[#ff6c52]"
           >
-            Adopt Now <span className=""><PawPrint size={18} strokeWidth={2} /></span>
-          </button>
+            Adopt Now{" "}
+            <span className="">
+              <PawPrint size={18} strokeWidth={2} />
+            </span>
+          </Link>
         </div>
       </div>
     </article>
