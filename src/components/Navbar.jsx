@@ -3,18 +3,19 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState, useSyncExternalStore } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { CiLogin } from "react-icons/ci";
 import { FaCat } from "react-icons/fa";
 import { FiMenu, FiMoon, FiSun, FiX } from "react-icons/fi";
 import { LuDog } from "react-icons/lu";
 import { authClient } from "@/app/lib/auth-client";
-import { Avatar, Button, Dropdown, Label } from "@heroui/react";
-import { ArrowRightFromSquare, Gear, Persons } from "@gravity-ui/icons";
-import { ArrowDownToLine, LogOut } from "lucide-react";
+import { Avatar, Dropdown, Label } from "@heroui/react";
+import { ArrowRightFromSquare } from "@gravity-ui/icons";
+import { ArrowDownToLine } from "lucide-react";
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const isHome = pathname === "/";
@@ -141,7 +142,11 @@ const Navbar = () => {
                       </div>
                     </div>
                     <Dropdown.Menu>
-                      <Dropdown.Item id="dashboard" textValue="Dashboard">
+                      <Dropdown.Item
+                        id="dashboard"
+                        textValue="Dashboard"
+                        onClick={() => router.push("/dashboard")}
+                      >
                         <Label>Dashboard</Label>
                       </Dropdown.Item>
 
@@ -232,7 +237,11 @@ const Navbar = () => {
                       </div>
                     </div>
                     <Dropdown.Menu>
-                      <Dropdown.Item id="dashboard" textValue="Dashboard">
+                      <Dropdown.Item
+                        id="dashboard"
+                        textValue="Dashboard"
+                        onClick={() => router.push("/dashboard")}
+                      >
                         <Label>Dashboard</Label>
                       </Dropdown.Item>
 
