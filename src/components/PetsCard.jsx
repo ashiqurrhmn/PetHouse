@@ -4,7 +4,6 @@ import { Heart, MapPin, PawPrint, ShieldCheck, Syringe, Wallet } from "lucide-re
 import Link from "next/link";
 
 const PetsCard = ({ pet }) => {
-  const isVaccinated = Boolean(pet?.vaccinated);
 
   return (
     <article className="group mb-7 overflow-hidden rounded-3xl border border-[#fb756326] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-[#fb75634d] dark:bg-[#1c1c1c]">
