@@ -49,7 +49,7 @@ const Banner = () => {
       >
         {slides.map((slide) => (
           <div
-            className="relative h-[88vh] min-h-120 max-h-190 min-w-full"
+            className="relative h-[88vh] min-h-screen max-h-190 min-w-full"
             key={slide.image}
           >
             <Image

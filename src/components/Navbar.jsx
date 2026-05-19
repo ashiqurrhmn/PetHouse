@@ -111,7 +111,7 @@ const Navbar = () => {
                   <Dropdown.Trigger className="rounded-full">
                     <div className="flex items-center gap-2 hover:bg-gray-200 dark:hover:bg-[#2d2d2d] px-3 py-2 rounded-full transition">
                       <Avatar>
-                        <Avatar.Image referrerPolicy="no-referer" alt="Junior Garcia" src={user?.image} />
+                        <Avatar.Image referrerPolicy="no-referer" alt="" src={user?.image} />
                         <Avatar.Fallback delayMs={600}>
                           {user.name[0]}
                         </Avatar.Fallback>
@@ -125,7 +125,7 @@ const Navbar = () => {
                     <div className="px-3 pt-3 pb-1">
                       <div className="flex items-center gap-2">
                         <Avatar size="sm">
-                          <Avatar.Image referrerPolicy="no-referer" alt="Jane" src={user?.image} />
+                          <Avatar.Image referrerPolicy="no-referer" alt="" src={user?.image} />
                           <Avatar.Fallback delayMs={600}>
                             {user.name[0]}
                           </Avatar.Fallback>
