@@ -50,6 +50,7 @@ const AddPetForm = () => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const [formData, setFormData] = useState(initialForm);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -58,20 +59,28 @@ const AddPetForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
     const user = Object.fromEntries(formData.entries());
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(user),
-    });
-    const data = await res.json();
-    toast.success(`${user.name} added successfully!`);
-    setFormData(initialForm);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
+      const data = await res.json();
+      toast.success(`${user.name} added successfully!`);
+      setFormData(initialForm);
+    } catch (error) {
+      console.error(error);
+      toast.error("Unable to submit the pet. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -234,11 +243,11 @@ const AddPetForm = () => {
       <div className="flex justify-end">
         <button
           type="submit"
-          disabled={isPending}
+          disabled={isPending || isSubmitting}
           className="inline-flex h-10 items-center justify-center gap-2 rounded-full bg-[#fb7563ea] px-6 text-sm font-black text-white shadow-sm transition hover:bg-[#f95f49] disabled:cursor-not-allowed disabled:opacity-70"
         >
           <PlusCircle size={18} />
-          Add Pet
+          {isSubmitting ? "Adding..." : "Add Pet"}
         </button>
       </div>
     </form>

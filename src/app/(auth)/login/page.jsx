@@ -26,6 +26,7 @@ export default function LoginPage() {
       toast.success("Login successful! Welcome back to PetHouse.");
       redirect("/");
     }
+
     if (error) {
       toast.error(error.message);
       return;
