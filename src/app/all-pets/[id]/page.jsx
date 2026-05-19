@@ -40,7 +40,6 @@ const PetDetailsPage = async ({ params }) => {
   const {token} = await auth.api.getToken({
     headers: await headers()
   })
-  console.log(token);
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets/${id}`, {
     headers: {
       authorization: `Bearer ${token}`
@@ -147,7 +146,7 @@ const PetDetailsPage = async ({ params }) => {
             </div>
           </div>
 
-          <AdoptionForm petName={pet.name} />
+          <AdoptionForm pet={pet} />
         </div>
       </div>
     </section>

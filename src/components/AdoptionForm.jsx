@@ -32,16 +32,36 @@ const FieldShell = ({ label, icon: Icon, children }) => (
 const inputClass =
   "h-10 w-full rounded-full border border-[#dfe6ef] bg-white px-4 text-sm font-semibold text-[#2e2804] outline-none transition placeholder:text-[#8a7d76] focus:border-[#fb7563ea] focus:ring-4 focus:ring-[#fb756326] disabled:bg-[#f1f5f9] disabled:text-[#526071] dark:border-[#3a302c] dark:bg-[#202020] dark:text-[#f8f4ea] dark:placeholder:text-gray-500 dark:disabled:bg-[#282828]";
 
-const AdoptionForm = ({ petName }) => {
+const AdoptionForm = ({ pet }) => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const [pickupDate, setPickupDate] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
-    toast.success(`Your adoption request for ${petName} has been submitted.`);
+    const adoptData = {
+      petName: pet.name,
+      petId: pet._id,
+      userId: user?.id,
+      userName: user?.name,
+      userEmail: user?.email,
+      pickupDate: new Date(pickupDate).toISOString().split("T")[0],
+      message,
+      requestDate: new Date().toISOString().split("T")[0],
+
+    }
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adoptions`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(adoptData),
+    });
+    const result = await res.json();
+
+    toast.success(`Your adoption request for ${pet.name} has been submitted.`);
     setPickupDate("");
     setMessage("");
   };
@@ -54,7 +74,7 @@ const AdoptionForm = ({ petName }) => {
         </span>
         <div>
           <h2 className="text-lg font-black text-[#2e2804] dark:text-[#f8f4ea]">
-            Request to Adopt {petName}
+            Request to Adopt {pet.name}
           </h2>
           <p className="mt-1 text-xs leading-5 text-[#665f59] dark:text-gray-300">
             Fill out this form and the owner will review your request.
@@ -67,7 +87,7 @@ const AdoptionForm = ({ petName }) => {
           <input
             type="text"
             name="petName"
-            value={petName}
+            value={pet.name}
             readOnly
             className={`${inputClass} pl-11`}
           />
@@ -120,7 +140,7 @@ const AdoptionForm = ({ petName }) => {
               onChange={(event) => setMessage(event.target.value)}
               rows={3}
               required
-              placeholder={`Leave a message for ${petName}...`}
+              placeholder={`Leave a message for ${pet.name}...`}
               className="w-full resize-none rounded-3xl border border-[#dfe6ef] bg-white px-4 py-3 pl-11 text-sm font-medium leading-6 text-[#2e2804] outline-none transition placeholder:text-[#8a7d76] focus:border-[#fb7563ea] focus:ring-4 focus:ring-[#fb756326] dark:border-[#3a302c] dark:bg-[#202020] dark:text-[#f8f4ea] dark:placeholder:text-gray-500"
             />
           </span>
@@ -131,7 +151,7 @@ const AdoptionForm = ({ petName }) => {
           disabled={isPending}
           className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-[#fb7563ea] px-6 text-sm font-black text-white shadow-sm transition hover:bg-[#f95f49] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          Adopt {petName}
+          Adopt {pet.name}
           <PawPrint size={18} />
         </button>
       </form>
