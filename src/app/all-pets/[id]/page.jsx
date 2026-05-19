@@ -14,14 +14,8 @@ import {
   VenusAndMars,
 } from "lucide-react";
 import React from "react";
-
-const fetchSinglePet = async (id) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets/${id}`, {
-    cache: "no-store",
-  });
-
-  return res.json();
-};
+import { headers } from "next/headers";
+import { auth } from "@/app/lib/auth";
 
 const DetailCard = ({ icon: Icon, label, value }) => (
   <div className="rounded-2xl border border-[#fb756326] bg-[#efe8d470] p-3 shadow-sm dark:border-[#fb75634d] dark:bg-[#1f1b19]">
@@ -43,7 +37,17 @@ const DetailCard = ({ icon: Icon, label, value }) => (
 
 const PetDetailsPage = async ({ params }) => {
   const { id } = await params;
-  const pet = await fetchSinglePet(id);
+  const {token} = await auth.api.getToken({
+    headers: await headers()
+  })
+  console.log(token);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets/${id}`, {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  });
+
+  const pet = await res.json();
 
   const details = [
     { icon: PawPrint, label: "Species", value: pet.species },

@@ -32,7 +32,7 @@ const FieldShell = ({ label, icon: Icon, children }) => (
 const inputClass =
   "h-10 w-full rounded-full border border-[#dfe6ef] bg-white px-4 text-sm font-semibold text-[#2e2804] outline-none transition placeholder:text-[#8a7d76] focus:border-[#fb7563ea] focus:ring-4 focus:ring-[#fb756326] disabled:bg-[#f1f5f9] disabled:text-[#526071] dark:border-[#3a302c] dark:bg-[#202020] dark:text-[#f8f4ea] dark:placeholder:text-gray-500 dark:disabled:bg-[#282828]";
 
-const AdoptionForm = ({ petName }) => {
+const AdoptionForm =  ({ petName }) => {
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const [pickupDate, setPickupDate] = useState("");
