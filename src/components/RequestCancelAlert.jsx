@@ -1,11 +1,14 @@
 "use client";
 
+import { authClient } from "@/app/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export function RequestCancelAlert( {request} ) {
  const handleCancel = async () => {
+
+   const {data:tokenData} = await authClient.token();
   try {
 
     const res = await fetch(
@@ -14,6 +17,7 @@ export function RequestCancelAlert( {request} ) {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
         },
       }
     );
