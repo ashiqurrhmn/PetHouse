@@ -35,18 +35,22 @@ const DetailCard = ({ icon: Icon, label, value }) => (
   </div>
 );
 
+const normalizeStatus = (status) => (status || "Available").toLowerCase();
+
 const PetDetailsPage = async ({ params }) => {
   const { id } = await params;
   const {token} = await auth.api.getToken({
     headers: await headers()
   })
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets/${id}`, {
+    cache: "no-store",
     headers: {
       authorization: `Bearer ${token}`
     }
   });
 
   const pet = await res.json();
+  const isAdopted = normalizeStatus(pet.status) === "adopted";
 
   const details = [
     { icon: PawPrint, label: "Species", value: pet.species },
@@ -90,8 +94,12 @@ const PetDetailsPage = async ({ params }) => {
                 sizes="(min-width: 1280px) 48vw, (min-width: 768px) 75vw, 92vw"
                 className="object-cover"
               />
-              <span className="absolute right-4 top-4 rounded-full bg-[#20b97b] px-3 py-1.5 text-xs font-extrabold text-white shadow-sm">
-                Available
+              <span
+                className={`absolute right-4 top-4 rounded-full px-3 py-1.5 text-xs font-extrabold text-white shadow-sm ${
+                  isAdopted ? "bg-[#fb7563ea]" : "bg-[#20b97b]"
+                }`}
+              >
+                {isAdopted ? "Adopted" : "Available"}
               </span>
             </div>
 
@@ -146,7 +154,18 @@ const PetDetailsPage = async ({ params }) => {
             </div>
           </div>
 
-          <AdoptionForm pet={pet} />
+          {isAdopted ? (
+            <aside className="min-w-0 rounded-3xl border border-[#fb756326] bg-white p-5 shadow-xl shadow-[#2e280414] dark:border-[#fb75634d] dark:bg-[#1c1c1c] dark:shadow-black/30">
+              <h2 className="text-lg font-black text-[#2e2804] dark:text-[#f8f4ea]">
+                {pet.name} has been adopted
+              </h2>
+              <p className="mt-2 text-sm leading-6 text-[#665f59] dark:text-gray-300">
+                This listing is no longer accepting adoption requests.
+              </p>
+            </aside>
+          ) : (
+            <AdoptionForm pet={pet} />
+          )}
         </div>
       </div>
     </section>

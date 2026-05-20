@@ -44,7 +44,7 @@ const AdoptionForm = ({ pet }) => {
     const adoptData = {
       petName: pet.name,
       petId: pet._id,
-      status: "pending",
+      status: "Pending",
       userId: user?.id,
       userName: user?.name,
       userEmail: user?.email,

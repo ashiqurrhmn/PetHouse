@@ -8,7 +8,12 @@ const statusStyles = {
   Pending: "bg-yellow-200 text-[#b3512f]",
   Approved: "bg-[#4caf5026] text-[#26743f]",
   Rejected: "bg-[#f4433626] text-red-600",
+  pending: "bg-yellow-200 text-[#b3512f]",
+  approved: "bg-[#4caf5026] text-[#26743f]",
+  rejected: "bg-[#f4433626] text-red-600",
 };
+
+const normalizeStatus = (status) => (status || "Pending").toLowerCase();
 
 const MyRequestPage = async () => {
   const session = await auth.api.getSession({
@@ -19,7 +24,6 @@ const MyRequestPage = async () => {
   const {token} = await auth.api.getToken({
     headers: await headers(),
   })
-
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/adoptions/${user?.id}`, {
       headers: {
@@ -107,7 +111,7 @@ const MyRequestPage = async () => {
 
                 <div>
                   <span
-                    className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${statusStyles[request.status]}`}
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-widest ${statusStyles[request.status] || statusStyles.Pending}`}
                   >
                     {request.status}
                   </span>
@@ -120,7 +124,9 @@ const MyRequestPage = async () => {
                   >
                     View
                   </Link>
-                  <RequestCancelAlert request={request} />
+                  {normalizeStatus(request.status) !== "approved" && (
+                    <RequestCancelAlert request={request} />
+                  )}
                 </div>
               </div>
             ))}

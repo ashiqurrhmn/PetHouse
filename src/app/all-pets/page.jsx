@@ -6,7 +6,9 @@ import { FaCat, FaDog } from "react-icons/fa";
 import { FiFilter, FiSearch } from "react-icons/fi";
 
 const fetchPets = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`);
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
+    cache: "no-store",
+  });
   const data = await res.json();
   return data || [];
 };

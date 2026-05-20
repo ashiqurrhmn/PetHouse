@@ -10,7 +10,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
+const normalizeStatus = (status) => (status || "Available").toLowerCase();
+
 const PetsCard = ({ pet }) => {
+  const isAdopted = normalizeStatus(pet.status) === "adopted";
+
   return (
     <article className="group mb-7 overflow-hidden rounded-3xl border border-[#fb756326] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-[#fb75634d] dark:bg-[#1c1c1c]">
       <div className="relative h-80 w-full overflow-hidden">
@@ -26,8 +30,12 @@ const PetsCard = ({ pet }) => {
         <div className="absolute left-4 top-4 rounded-full bg-white/95 px-3 py-1 text-xs font-bold text-[#2e2804]">
           {pet.species}
         </div>
-        <div className="absolute right-4 top-4 rounded-full bg-[#20b97b] px-3 py-1 text-xs font-bold text-white">
-          Available
+        <div
+          className={`absolute right-4 top-4 rounded-full px-3 py-1 text-xs font-bold text-white ${
+            isAdopted ? "bg-[#fb7563ea]" : "bg-[#20b97b]"
+          }`}
+        >
+          {isAdopted ? "Adopted" : "Available"}
         </div>
       </div>
 
@@ -68,15 +76,25 @@ const PetsCard = ({ pet }) => {
           >
             View Details
           </Link>
-          <Link
-            href={`/all-pets/${pet._id}`}
-            className="h-11 flex items-center justify-center gap-2 rounded-full bg-[#fb7563ea]  text-sm font-bold text-white shadow-sm transition hover:bg-[#ff6c52]"
-          >
-            Adopt Now{" "}
-            <span className="">
-              <PawPrint size={18} strokeWidth={2} />
-            </span>
-          </Link>
+          {isAdopted ? (
+            <button
+              type="button"
+              disabled
+              className="flex h-11 cursor-not-allowed items-center justify-center gap-2 rounded-full bg-[#b8b1aa] text-sm font-bold text-white shadow-sm"
+            >
+              Adopted
+            </button>
+          ) : (
+            <Link
+              href={`/all-pets/${pet._id}`}
+              className="flex h-11 items-center justify-center gap-2 rounded-full bg-[#fb7563ea] text-sm font-bold text-white shadow-sm transition hover:bg-[#ff6c52]"
+            >
+              Adopt Now{" "}
+              <span className="">
+                <PawPrint size={18} strokeWidth={2} />
+              </span>
+            </Link>
+          )}
         </div>
       </div>
     </article>

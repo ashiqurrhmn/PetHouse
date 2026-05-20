@@ -56,7 +56,7 @@ const ListingCard = ({ pet, onPetDeleted, onPetUpdated }) => {
           </div>
 
           <div className="mt-5 grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <ListingRequestsButton pet={pet} />
+            <ListingRequestsButton pet={pet} onPetUpdated={onPetUpdated} />
             <ListingEditButton pet={pet} onPetUpdated={onPetUpdated} />
             <ListingViewButton petId={pet._id} />
             <ListingDeleteButton pet={pet} onPetDeleted={onPetDeleted} />

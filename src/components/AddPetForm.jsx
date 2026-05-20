@@ -15,6 +15,7 @@ import {
   UserRound,
   VenusAndMars,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 
@@ -46,6 +47,7 @@ const Field = ({ label, icon: Icon, children }) => (
 );
 
 const AddPetForm = () => {
+  const router = useRouter();
   const { data: session, isPending } = authClient.useSession();
   const user = session?.user;
   const [formData, setFormData] = useState(initialForm);
@@ -82,6 +84,7 @@ const AddPetForm = () => {
       const data = await res.json();
       toast.success(`${petData.name} added successfully!`);
       setFormData(initialForm);
+      router.push("/dashboard/my-listings");
     } catch (error) {
       console.error(error);
       toast.error("Unable to submit the pet. Please try again.");
