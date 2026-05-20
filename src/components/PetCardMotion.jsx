@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import PetsCard from "./PetsCard";
 
-const PetsGrid = ({ pets }) => {
+const PetCardMotion = ({ pets }) => {
   return (
     <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
       {pets.map((pet, index) => (
@@ -24,4 +24,4 @@ const PetsGrid = ({ pets }) => {
   );
 };
 
-export default PetsGrid;
+export default PetCardMotion;
