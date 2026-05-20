@@ -1,20 +1,41 @@
 
+"use client";
+
+import React, { useEffect, useState } from "react";
 import PetsCard from "@/components/PetsCard";
 import { SlidersHorizontal } from "lucide-react";
-import React from "react";
 import { FaDog } from "react-icons/fa";
 import { FiFilter, FiSearch } from "react-icons/fi";
+import { Spinner } from "@heroui/react";
 
-const fetchPets = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
-    cache: "no-store",
-  });
-  const data = await res.json();
-  return data || [];
-};
+const AllPets = () => {
+  const [pets, setPets] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-const AllPets = async () => {
-  const pets = await fetchPets();
+  useEffect(() => {
+    let mounted = true;
+    const fetchPets = async () => {
+      setIsLoading(true);
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
+          cache: "no-store",
+        });
+        if (!res.ok) throw new Error("Failed to fetch pets");
+        const data = await res.json();
+        if (mounted) setPets(Array.isArray(data) ? data : []);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        if (mounted) setIsLoading(false);
+      }
+    };
+
+    fetchPets();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
   return (
     <section className="min-h-screen bg-white pb-24 pt-20 text-[#2e2804] transition-colors duration-300 dark:bg-[#111111] dark:text-[#f8f4ea]">
       <div className="mx-auto w-11/12 md:w-9/12 mb-10">
@@ -31,9 +52,9 @@ const AllPets = async () => {
         </div>
 
         <div className="mt-10 rounded-xl border border-[#fb756326] bg-[#efe8d470] p-4 shadow-sm dark:border-[#fb75634d] dark:bg-[#1a1a1a] md:p-5">
-            <div className="flex gap-2 font-semibold mb-5">
-                <span className="text-[#fb7563ea]"><SlidersHorizontal /></span> Search & Filter
-            </div>
+          <div className="flex gap-2 font-semibold mb-5">
+            <span className="text-[#fb7563ea]"><SlidersHorizontal /></span> Search & Filter
+          </div>
           <div className="grid gap-4 lg:grid-cols-[1.3fr_0.8fr_0.7fr_auto]">
             <label className="relative block">
               <FiSearch className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-[#fb7563ea]" />
@@ -62,11 +83,13 @@ const AllPets = async () => {
         </div>
       </div>
       <div className="mx-auto w-11/12 md:w-9/12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {
-            pets.map((pet) => (
-                <PetsCard key={pet._id} pet={pet} />
-            ))
-        }
+        {isLoading ? (
+          <div className="col-span-full flex items-center justify-center py-12">
+            <Spinner size="lg" className="text-[#fb7563ea]" />
+          </div>
+        ) : (
+          pets.map((pet) => <PetsCard key={pet._id} pet={pet} />)
+        )}
       </div>
     </section>
   );
