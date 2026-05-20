@@ -2,10 +2,12 @@
 
 import { authClient } from "@/app/lib/auth-client";
 import { AlertDialog, Button } from "@heroui/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
 export function RequestCancelAlert( {request} ) {
+ const router = useRouter();
  const handleCancel = async () => {
 
    const {data:tokenData} = await authClient.token();
@@ -22,8 +24,11 @@ export function RequestCancelAlert( {request} ) {
       }
     );
 
-    const result = await res.json();
-    window.location.reload();
+    if (!res.ok) {
+      throw new Error("Failed to cancel request");
+    }
+
+    router.refresh();
 
     toast.success(`Your adoption request for ${request.petName} has been cancelled.`);
   } catch (error) {

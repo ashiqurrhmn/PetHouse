@@ -1,7 +1,6 @@
 "use client";
 
 import { authClient } from "@/app/lib/auth-client";
-import { set } from "better-auth";
 import {
   BadgeDollarSign,
   HeartPulse,
@@ -62,7 +61,12 @@ const AddPetForm = () => {
     setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
-    const user = Object.fromEntries(formData.entries());
+    const petData = Object.fromEntries(formData.entries());
+    const payload = {
+      ...petData,
+      userId: user?.id,
+      status: "Available",
+    };
 
     const {data:tokenData} = await authClient.token();
 
@@ -73,10 +77,10 @@ const AddPetForm = () => {
           "Content-Type": "application/json",
           authorization: `Bearer ${tokenData?.token}`,
         },
-        body: JSON.stringify(user),
+        body: JSON.stringify(payload),
       });
       const data = await res.json();
-      toast.success(`${user.name} added successfully!`);
+      toast.success(`${petData.name} added successfully!`);
       setFormData(initialForm);
     } catch (error) {
       console.error(error);
