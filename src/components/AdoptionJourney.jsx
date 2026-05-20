@@ -1,5 +1,7 @@
-import React from "react";
+"use client";
 
+import React from "react";
+import { motion } from "framer-motion";
 const steps = [
   {
     number: "01",
@@ -20,7 +22,13 @@ const steps = [
 
 const AdoptionJourney = () => {
   return (
-    <section className="mx-auto my-30 w-11/12 md:w-9/12">
+    <motion.section
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="mx-auto my-30 w-11/12 md:w-9/12"
+    >
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Adoption Journey
@@ -44,7 +52,7 @@ const AdoptionJourney = () => {
           </article>
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

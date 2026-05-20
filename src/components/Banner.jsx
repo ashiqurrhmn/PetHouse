@@ -5,6 +5,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { GiCat } from "react-icons/gi";
+import { motion } from "framer-motion";
 
 const slides = [
   {
@@ -42,7 +43,12 @@ const Banner = () => {
   };
 
   return (
-    <section className="relative overflow-hidden">
+    <motion.section
+    initial={{ opacity: 0, y: 60 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+     className="relative overflow-hidden">
       <div
         className="flex transition-transform duration-700 ease-out"
         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
@@ -116,7 +122,7 @@ const Banner = () => {
           />
         ))}
       </div>
-    </section>
+    </motion.section>
   );
 };
 

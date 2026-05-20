@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { FaStar } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const stories = [
   {
@@ -25,7 +28,13 @@ const stories = [
 
 const SuccessStories = () => {
   return (
-    <section className="bg-[#efe8d470] py-30 transition-colors duration-300 dark:bg-[#171717]">
+    <motion.section
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="bg-[#efe8d470] py-30 transition-colors duration-300 dark:bg-[#171717]"
+        >
       <div className="mx-auto w-11/12 md:w-9/12">
         <div className="mx-auto max-w-3xl text-center">
           <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
@@ -69,7 +78,7 @@ const SuccessStories = () => {
           ))}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

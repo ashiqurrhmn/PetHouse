@@ -1,6 +1,9 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import { FaHeart, FaHome, FaPaw } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 const reasons = [
   {
@@ -25,7 +28,13 @@ const reasons = [
 
 const WhyAdopt = () => {
   return (
-    <section className="mx-auto my-30 w-11/12 md:w-9/12">
+    <motion.section
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      viewport={{ once: true }}
+      className="mx-auto my-30 w-11/12 md:w-9/12"
+    >
       <div className="mx-auto mb-10 max-w-3xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Why Adopt Pets
@@ -70,7 +79,7 @@ const WhyAdopt = () => {
           />
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 };
 

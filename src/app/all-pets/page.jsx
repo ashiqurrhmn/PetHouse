@@ -4,6 +4,8 @@ import PetSearch from "@/components/PetSearch";
 import { SlidersHorizontal } from "lucide-react";
 import React from "react";
 import { FiSearch } from "react-icons/fi";
+import PetCardMotion from "@/components/PetCardMotion";
+
 
 const fetchPets = async (searchTerm = "", species = "") => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets?search=${searchTerm}&species=${species}`, {
@@ -64,11 +66,7 @@ const AllPets = async ({searchParams}) => {
       </p>
     </div>
   ) : (
-    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-      {pets.map((pet) => (
-        <PetsCard key={pet._id} pet={pet} />
-      ))}
-    </div>
+    <PetCardMotion pets={pets} />
   )}
 </div>
     </section>
