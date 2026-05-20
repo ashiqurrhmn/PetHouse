@@ -16,8 +16,16 @@ const MyRequestPage = async () => {
   });
   const user = session?.user;
 
+  const {token} = await auth.api.getToken({
+    headers: await headers(),
+  })
+
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/adoptions/${user?.id}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/adoptions/${user?.id}`, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      }
+    }
   );
   const requests = await res.json();
 
