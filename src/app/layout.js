@@ -19,18 +19,6 @@ export const metadata = {
   description: "It's a pet adoption website",
 };
 
-const themeScript = `
-  try {
-    const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const theme = savedTheme || (prefersDark ? "dark" : "light");
-
-    document.documentElement.classList.toggle("dark", theme === "dark");
-    document.documentElement.style.colorScheme = theme;
-    localStorage.setItem("theme", theme);
-  } catch {}
-`;
-
 export default function RootLayout({ children }) {
   return (
     <html
@@ -39,8 +27,23 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
-      </head>
+  <script
+    dangerouslySetInnerHTML={{
+      __html: `
+        try {
+          const savedTheme = localStorage.getItem("theme");
+          const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          const theme = savedTheme || (prefersDark ? "dark" : "light");
+
+          document.documentElement.classList.toggle("dark", theme === "dark");
+          document.documentElement.style.colorScheme = theme;
+          localStorage.setItem("theme", theme);
+        } catch {}
+      `,
+    }}
+  />
+</head>
+
       <body>
         <Navbar />
         <main>{children}</main>

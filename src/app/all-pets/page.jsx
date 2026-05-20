@@ -2,7 +2,7 @@
 import PetsCard from "@/components/PetsCard";
 import { SlidersHorizontal } from "lucide-react";
 import React from "react";
-import { FaCat, FaDog } from "react-icons/fa";
+import { FaDog } from "react-icons/fa";
 import { FiFilter, FiSearch } from "react-icons/fi";
 
 const fetchPets = async () => {

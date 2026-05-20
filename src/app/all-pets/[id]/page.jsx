@@ -16,6 +16,7 @@ import {
 import React from "react";
 import { headers } from "next/headers";
 import { auth } from "@/app/lib/auth";
+import { notFound } from "next/navigation";
 
 const DetailCard = ({ icon: Icon, label, value }) => (
   <div className="rounded-2xl border border-[#fb756326] bg-[#efe8d470] p-3 shadow-sm dark:border-[#fb75634d] dark:bg-[#1f1b19]">
@@ -36,9 +37,11 @@ const DetailCard = ({ icon: Icon, label, value }) => (
 );
 
 const normalizeStatus = (status) => (status || "Available").toLowerCase();
+const isMongoId = (id) => /^[0-9a-fA-F]{24}$/.test(id);
 
 const PetDetailsPage = async ({ params }) => {
   const { id } = await params;
+
   const {token} = await auth.api.getToken({
     headers: await headers()
   })
@@ -50,6 +53,7 @@ const PetDetailsPage = async ({ params }) => {
   });
 
   const pet = await res.json();
+
   const isAdopted = normalizeStatus(pet.status) === "adopted";
 
   const details = [
