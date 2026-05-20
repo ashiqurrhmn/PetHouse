@@ -38,6 +38,8 @@ const AdoptionForm = ({ pet }) => {
   const [pickupDate, setPickupDate] = useState("");
   const [message, setMessage] = useState("");
 
+  const isOwner = user?.id && pet?.userId && user.id === pet.userId;
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -66,6 +68,26 @@ const AdoptionForm = ({ pet }) => {
     setPickupDate("");
     setMessage("");
   };
+
+  if (isOwner) {
+    return (
+      <aside className=" min-w-0 rounded-3xl border border-[#fb756326] bg-white p-4 shadow-xl shadow-[#2e280414] dark:border-[#fb75634d] dark:bg-[#1c1c1c] dark:shadow-black/30 sm:p-5">
+        <div className="mb-0 flex items-start gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-[#fb756314] text-[#fb7563ea] dark:bg-[#fb756326]">
+            <Heart size={19} />
+          </span>
+          <div>
+            <h2 className="text-lg font-black text-[#2e2804] dark:text-[#f8f4ea]">
+              This is Your Pet
+            </h2>
+            <p className="mt-1 text-sm leading-5 text-[#665f59] dark:text-gray-300">
+              You cannot adopt your own pet listing. Only other users can request to adopt {pet.name}.
+            </p>
+          </div>
+        </div>
+      </aside>
+    );
+  }
 
   return (
     <aside className=" min-w-0 rounded-3xl border border-[#fb756326] bg-white p-4 shadow-xl shadow-[#2e280414] dark:border-[#fb75634d] dark:bg-[#1c1c1c] dark:shadow-black/30 sm:p-5">

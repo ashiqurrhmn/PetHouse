@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import React from "react";
 import {
@@ -9,11 +11,15 @@ import {
   Wallet,
 } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/app/lib/auth-client";
 
 const normalizeStatus = (status) => (status || "Available").toLowerCase();
 
 const PetsCard = ({ pet }) => {
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
   const isAdopted = normalizeStatus(pet.status) === "adopted";
+  const isOwner = user?.id && pet?.userId && user.id === pet.userId;
 
   return (
     <article className="group mb-7 overflow-hidden rounded-3xl border border-[#fb756326] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-lg dark:border-[#fb75634d] dark:bg-[#1c1c1c]">
@@ -76,7 +82,15 @@ const PetsCard = ({ pet }) => {
           >
             View Details
           </Link>
-          {isAdopted ? (
+          {isOwner ? (
+            <button
+              type="button"
+              disabled
+              className="flex h-11 cursor-not-allowed items-center justify-center gap-2 rounded-full bg-[#b8b1aa] text-sm font-bold text-white shadow-sm"
+            >
+              Your Pet
+            </button>
+          ) : isAdopted ? (
             <button
               type="button"
               disabled
