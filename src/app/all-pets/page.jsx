@@ -1,41 +1,23 @@
-
-"use client";
-
-import React, { useEffect, useState } from "react";
+import PetFilter from "@/components/PetFilter";
 import PetsCard from "@/components/PetsCard";
+import PetSearch from "@/components/PetSearch";
 import { SlidersHorizontal } from "lucide-react";
-import { FaDog } from "react-icons/fa";
-import { FiFilter, FiSearch } from "react-icons/fi";
-import { Spinner } from "@heroui/react";
+import React from "react";
+import { FiSearch } from "react-icons/fi";
 
-const AllPets = () => {
-  const [pets, setPets] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+const fetchPets = async (searchTerm = "", species = "") => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets?search=${searchTerm}&species=${species}`, {
+    cache: "no-store",
+  });
+  const data = await res.json();
+  return data || [];
+};
 
-  useEffect(() => {
-    let mounted = true;
-    const fetchPets = async () => {
-      setIsLoading(true);
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/pets`, {
-          cache: "no-store",
-        });
-        if (!res.ok) throw new Error("Failed to fetch pets");
-        const data = await res.json();
-        if (mounted) setPets(Array.isArray(data) ? data : []);
-      } catch (err) {
-        console.error(err);
-      } finally {
-        if (mounted) setIsLoading(false);
-      }
-    };
-
-    fetchPets();
-    return () => {
-      mounted = false;
-    };
-  }, []);
-
+const AllPets = async ({searchParams}) => {
+  //  console.log(searchParams);
+  const sParams = await searchParams;
+  const pets = await fetchPets(sParams?.searchTerm || "", sParams?.species || "");
+ 
   return (
     <section className="min-h-screen bg-white pb-24 pt-20 text-[#2e2804] transition-colors duration-300 dark:bg-[#111111] dark:text-[#f8f4ea]">
       <div className="mx-auto w-11/12 md:w-9/12 mb-10">
@@ -47,50 +29,48 @@ const AllPets = () => {
             Pets Ready For A Loving Home
           </h1>
           <p className="mt-4 max-w-2xl text-base leading-7 text-[#2e2804] dark:text-gray-300">
-            Browse available cats, dogs etc for adoption. Find your new best friend today!
+            Browse available cats, dogs etc for adoption. Find your new best
+            friend today!
           </p>
         </div>
 
         <div className="mt-10 rounded-xl border border-[#fb756326] bg-[#efe8d470] p-4 shadow-sm dark:border-[#fb75634d] dark:bg-[#1a1a1a] md:p-5">
           <div className="flex gap-2 font-semibold mb-5">
-            <span className="text-[#fb7563ea]"><SlidersHorizontal /></span> Search & Filter
+            <span className="text-[#fb7563ea]">
+              <SlidersHorizontal />
+            </span>{" "}
+            Search & Filter
           </div>
-          <div className="grid gap-4 lg:grid-cols-[1.3fr_0.8fr_0.7fr_auto]">
+          <div className="grid gap-4 lg:grid-cols-[1.3fr_0.8fr_auto]">
             <label className="relative block">
               <FiSearch className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-lg text-[#fb7563ea]" />
-              <input
-                type="search"
-                placeholder="Search by name or breed"
-                className="h-12 w-full rounded-lg border border-[#dfe6ef] bg-white pl-11 pr-4 text-sm font-medium text-[#031a3d] outline-none transition placeholder:text-[#7b8798] focus:border-[#fb7563ea] dark:border-[#374151] dark:bg-[#202020] dark:text-[#f8f4ea] dark:placeholder:text-gray-400"
-              />
+              <PetSearch />
             </label>
 
-            <label className="relative block">
-              <select className="h-12 w-full appearance-none rounded-lg border border-[#dfe6ef] bg-white px-4 text-sm font-semibold text-[#031a3d] outline-none transition focus:border-[#fb7563ea] dark:border-[#374151] dark:bg-[#202020] dark:text-[#f8f4ea]">
-                <option>All Pets</option>
-                <option>Dogs</option>
-                <option>Cats</option>
-              </select>
-              <FaDog className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-[#fb7563ea]" />
-            </label>
+            <PetFilter />
 
-
-            <button className="inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#fb7563ea] px-6 text-sm font-bold text-white shadow-sm transition hover:bg-[#f95f49]">
-              <FiFilter />
-              Filter
-            </button>
           </div>
         </div>
       </div>
-      <div className="mx-auto w-11/12 md:w-9/12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-        {isLoading ? (
-          <div className="col-span-full flex items-center justify-center py-12">
-            <Spinner size="lg" className="text-[#fb7563ea]" />
-          </div>
-        ) : (
-          pets.map((pet) => <PetsCard key={pet._id} pet={pet} />)
-        )}
-      </div>
+      <div className="mx-auto w-11/12 md:w-9/12">
+  {pets.length === 0 ? (
+    <div className="flex min-h-75 flex-col items-center justify-center rounded-2xl border border-dashed border-[#fb75634d] bg-[#efe8d470] text-center dark:bg-[#1a1a1a]">
+      <h2 className="text-2xl font-bold text-[#2e2804] dark:text-white">
+        No Pets Found
+      </h2>
+
+      <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+        No pets match your search or filter.
+      </p>
+    </div>
+  ) : (
+    <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {pets.map((pet) => (
+        <PetsCard key={pet._id} pet={pet} />
+      ))}
+    </div>
+  )}
+</div>
     </section>
   );
 };
