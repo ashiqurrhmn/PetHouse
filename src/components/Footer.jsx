@@ -13,8 +13,8 @@ const Footer = () => {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <Image
-              className="rounded-full bg-[#efe8d470]"
-              src="/assets/logo1.png"
+              
+              src="/assets/logo3.png"
               alt="PetHouse Logo"
               width={200}
               height={100}

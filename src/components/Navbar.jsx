@@ -83,7 +83,7 @@ const Navbar = () => {
         <div>
           <Link href="/">
             <Image
-              src="/assets/logo1.png"
+              src="/assets/logo3.png"
               alt="PetHouse Logo"
               width={150}
               height={100}
