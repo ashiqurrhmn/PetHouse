@@ -9,7 +9,7 @@ import {
   PawPrint,
   UserRound,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 const FieldShell = ({ label, icon: Icon, children }) => (
@@ -37,11 +37,69 @@ const AdoptionForm = ({ pet }) => {
   const user = session?.user;
   const [pickupDate, setPickupDate] = useState("");
   const [message, setMessage] = useState("");
+  const [hasExistingRequest, setHasExistingRequest] = useState(false);
+  const [isCheckingRequest, setIsCheckingRequest] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const isOwner = user?.id && pet?.userId && user.id === pet.userId;
+  const today = useMemo(() => new Date().toISOString().split("T")[0], []);
+
+  useEffect(() => {
+    const checkExistingRequest = async () => {
+      if (!user?.id || !pet?._id || isOwner) {
+        setHasExistingRequest(false);
+        return;
+      }
+
+      setIsCheckingRequest(true);
+
+      try {
+        const { data: tokenData } = await authClient.token();
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/adoptions/${user.id}`,
+          {
+            cache: "no-store",
+            headers: {
+              authorization: `Bearer ${tokenData?.token}`,
+            },
+          },
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to check existing adoption requests");
+        }
+
+        const requests = await res.json();
+        const alreadyRequested = Array.isArray(requests)
+          ? requests.some((request) => request.petId === pet._id)
+          : false;
+
+        setHasExistingRequest(alreadyRequested);
+      } catch (error) {
+        console.error(error);
+        toast.error("Unable to check your previous adoption requests.");
+      } finally {
+        setIsCheckingRequest(false);
+      }
+    };
+
+    checkExistingRequest();
+  }, [isOwner, pet?._id, user?.id]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    if (!user?.id) {
+      toast.error("Please login before submitting an adoption request.");
+      return;
+    }
+
+    if (hasExistingRequest) {
+      toast.info(`You have already submitted a request for ${pet.name}.`);
+      return;
+    }
+
+    setIsSubmitting(true);
 
     const adoptData = {
       petName: pet.name,
@@ -52,21 +110,35 @@ const AdoptionForm = ({ pet }) => {
       userEmail: user?.email,
       pickupDate: new Date(pickupDate).toISOString().split("T")[0],
       message,
-      requestDate: new Date().toISOString().split("T")[0],
+      requestDate: today,
+    };
 
+    try {
+      const { data: tokenData } = await authClient.token();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adoptions`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
+        body: JSON.stringify(adoptData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({}));
+        throw new Error(errorData?.message || "Failed to submit adoption request");
+      }
+
+      toast.success(`Your adoption request for ${pet.name} has been submitted.`);
+      setHasExistingRequest(true);
+      setPickupDate("");
+      setMessage("");
+    } catch (error) {
+      console.error(error);
+      toast.error(error.message || "Failed to submit adoption request.");
+    } finally {
+      setIsSubmitting(false);
     }
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/adoptions`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(adoptData),
-    });
-    const result = await res.json();
-
-    toast.success(`Your adoption request for ${pet.name} has been submitted.`);
-    setPickupDate("");
-    setMessage("");
   };
 
   if (isOwner) {
@@ -100,10 +172,19 @@ const AdoptionForm = ({ pet }) => {
             Request to Adopt {pet.name}
           </h2>
           <p className="mt-1 text-xs leading-5 text-[#665f59] dark:text-gray-300">
-            Fill out this form and the owner will review your request.
+            {hasExistingRequest
+              ? "You have already sent an adoption request for this pet."
+              : "Fill out this form and the owner will review your request."}
           </p>
         </div>
       </div>
+
+      {hasExistingRequest && (
+        <div className="mb-4 rounded-2xl border border-[#fb756326] bg-[#fb756314] p-4 text-sm font-semibold leading-6 text-[#b3512f] dark:border-[#fb75634d] dark:bg-[#fb75631f] dark:text-[#f8c9c1]">
+          Your adoption request for {pet.name} is already submitted. You cannot
+          submit another request for the same pet.
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <FieldShell label="Pet Name" icon={PawPrint}>
@@ -141,9 +222,10 @@ const AdoptionForm = ({ pet }) => {
             type="date"
             name="pickupDate"
             value={pickupDate}
-            min={new Date().toISOString().split("T")[0]}
+            min={today}
             onChange={(event) => setPickupDate(event.target.value)}
             required
+            disabled={hasExistingRequest}
             className={`${inputClass} pl-11`}
           />
         </FieldShell>
@@ -163,6 +245,7 @@ const AdoptionForm = ({ pet }) => {
               onChange={(event) => setMessage(event.target.value)}
               rows={3}
               required
+              disabled={hasExistingRequest}
               placeholder={`Leave a message for ${pet.name}...`}
               className="w-full resize-none rounded-3xl border border-[#dfe6ef] bg-white px-4 py-3 pl-11 text-sm font-medium leading-6 text-[#2e2804] outline-none transition placeholder:text-[#8a7d76] focus:border-[#fb7563ea] focus:ring-4 focus:ring-[#fb756326] dark:border-[#3a302c] dark:bg-[#202020] dark:text-[#f8f4ea] dark:placeholder:text-gray-500"
             />
@@ -171,10 +254,16 @@ const AdoptionForm = ({ pet }) => {
 
         <button
           type="submit"
-          disabled={isPending}
+          disabled={isPending || isCheckingRequest || isSubmitting || hasExistingRequest}
           className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-[#fb7563ea] px-6 text-sm font-black text-white shadow-sm transition hover:bg-[#f95f49] disabled:cursor-not-allowed disabled:opacity-70"
         >
-          Adopt {pet.name}
+          {isCheckingRequest
+            ? "Checking request..."
+            : isSubmitting
+              ? "Submitting..."
+              : hasExistingRequest
+                ? "Request Already Submitted"
+                : `Adopt ${pet.name}`}
           <PawPrint size={18} />
         </button>
       </form>
