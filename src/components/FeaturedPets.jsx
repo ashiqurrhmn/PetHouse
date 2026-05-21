@@ -2,6 +2,7 @@ import React from "react";
 import PetsCard from "./PetsCard";
 import Link from "next/link";
 import { Cat } from "lucide-react";
+import FeaturedCardMotion from "./FeaturedCardMotion";
 
 const FeaturedPets = async () => {
   const res = await fetch(
@@ -20,8 +21,8 @@ const FeaturedPets = async () => {
         </h2>
       </div>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-10">
-        {data.map((pet) => (
-          <PetsCard key={pet._id} pet={pet} />
+        {data.map((pet, index) => (
+          <FeaturedCardMotion key={pet._id} pet={pet} index={index} />
         ))}
       </div>
       <div className="mt-10 flex justify-center">

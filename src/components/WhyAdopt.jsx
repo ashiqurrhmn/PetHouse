@@ -32,7 +32,7 @@ const WhyAdopt = () => {
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       className="mx-auto my-30 w-11/12 md:w-9/12"
     >
       <div className="mx-auto mb-10 max-w-3xl text-center">
@@ -43,8 +43,8 @@ const WhyAdopt = () => {
           A Small Adoption Choice, A Big Life Change
         </h2>
         <p className="mt-4 text-[#2e2804c4] dark:text-[#e5dfd2cc]">
-          Adoption creates a meaningful bond and gives a deserving companion the loving home they
-          always needed.
+          Adoption creates a meaningful bond and gives a deserving companion the
+          loving home they always needed.
         </p>
       </div>
 
@@ -60,15 +60,29 @@ const WhyAdopt = () => {
                   {reason.icon}
                 </div>
                 <div>
-                  <h3 className="font-semibold text-[#2e2804] dark:text-[#f8f4ea]">{reason.title}</h3>
-                  <p className="mt-1 text-sm text-[#2e2804c4] dark:text-[#e5dfd2cc]">{reason.description}</p>
+                  <h3 className="font-semibold text-[#2e2804] dark:text-[#f8f4ea]">
+                    {reason.title}
+                  </h3>
+                  <p className="mt-1 text-sm text-[#2e2804c4] dark:text-[#e5dfd2cc]">
+                    {reason.description}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
 
-        <div className="relative order-1 mx-auto mt-10 w-full max-w-lg lg:order-2">
+        <motion.div
+          animate={{
+            rotate: [-2, 2, -2],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="relative order-1 mx-auto mt-10 w-full max-w-lg lg:order-2"
+        >
           <div className="absolute -left-4 -top-4 h-full w-full rounded-lg bg-[#efe8d470] dark:bg-[#2e2a20]" />
           <Image
             src="/assets/cat1.jpg"
@@ -77,7 +91,7 @@ const WhyAdopt = () => {
             height={500}
             className="relative h-120 w-full rounded-lg object-cover object-center shadow-lg"
           />
-        </div>
+        </motion.div>
       </div>
     </motion.section>
   );

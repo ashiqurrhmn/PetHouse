@@ -32,7 +32,7 @@ const SuccessStories = () => {
       initial={{ opacity: 0, y: 60 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
-      viewport={{ once: true }}
+      viewport={{ once: false }}
       className="bg-[#efe8d470] py-30 transition-colors duration-300 dark:bg-[#171717]"
         >
       <div className="mx-auto w-11/12 md:w-9/12">

@@ -15,7 +15,7 @@ const PetCardMotion = ({ pets }) => {
             duration: 0.5,
             delay: index * 0.08,
           }}
-          viewport={{ once: true }}
+          viewport={{ once: false }}
         >
           <PetsCard pet={pet} />
         </motion.div>

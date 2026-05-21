@@ -1,5 +1,4 @@
 import PetFilter from "@/components/PetFilter";
-import PetsCard from "@/components/PetsCard";
 import PetSearch from "@/components/PetSearch";
 import { SlidersHorizontal } from "lucide-react";
 import React from "react";
