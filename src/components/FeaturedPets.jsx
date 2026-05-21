@@ -11,7 +11,7 @@ const FeaturedPets = async () => {
   const data = await res.json();
 
   return (
-    <div className="w-9/12 mx-auto mt-30 bg-[#efe8d470] dark:bg-[#1c1c1c] p-10 rounded-2xl">
+    <div className="w-11/12 lg:w-9/12 mx-auto mt-30 bg-[#efe8d470] dark:bg-[#1c1c1c] p-10 rounded-2xl">
       <div className="mx-auto max-w-3xl text-center">
         <p className="text-sm font-semibold uppercase tracking-widest text-[#fb7563ea]">
           Featured Pets
