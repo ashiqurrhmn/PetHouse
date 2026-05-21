@@ -80,16 +80,32 @@ const Navbar = () => {
       }
     >
       <nav className="relative mx-auto flex w-11/12 items-center justify-between md:py-3">
-        <div>
+        {
+          isDark ? <>
+          <div>
           <Link href="/">
             <Image
-              src="/assets/logo3.png"
+              src="/assets/logo dark.png"
               alt="PetHouse Logo"
-              width={150}
+              width={170}
               height={100}
             />
           </Link>
         </div>
+          </> :
+          <>
+          <div>
+          <Link href="/">
+            <Image
+              src="/assets/logo light.png"
+              alt="PetHouse Logo"
+              width={170}
+              height={100}
+            />
+          </Link>
+        </div>
+          </>
+        }
 
         <div className="hidden md:block">
           <ul className="flex gap-6 font-medium text-gray-900 dark:text-gray-100">

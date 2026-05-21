@@ -1,24 +1,56 @@
+"use client"
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useSyncExternalStore } from "react";
 import { FaFacebookF, FaInstagram, FaTwitter } from "react-icons/fa";
 import { HiOutlineLocationMarker, HiOutlineMail, HiOutlinePhone } from "react-icons/hi";
 
 const Footer = () => {
   const year = new Date().getFullYear();
 
+   const theme = useSyncExternalStore(
+      (onStoreChange) => {
+        window.addEventListener("storage", onStoreChange);
+        window.addEventListener("themeChange", onStoreChange);
+  
+        return () => {
+          window.removeEventListener("storage", onStoreChange);
+          window.removeEventListener("themeChange", onStoreChange);
+        };
+      },
+      () =>
+        document.documentElement.classList.contains("dark") ? "dark" : "light",
+      () => "light",
+    );
+  
+    const isDark = theme === "dark";
+  
+
   return (
     <footer className="border-t border-[#fb756340] bg-[#efe8d470] text-[#2e2804] dark:bg-[#1b1b1b] dark:text-[#f8f4ea]">
       <div className="mx-auto w-11/12 py-12">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Image
+            {
+              isDark ? <>
+              <Image
               
-              src="/assets/logo3.png"
+              src="/assets/logo dark.png"
               alt="PetHouse Logo"
               width={200}
               height={100}
             />
+              </> : <>
+              <Image
+              
+              src="/assets/logo light.png"
+              alt="PetHouse Logo"
+              width={200}
+              height={100}
+            />
+              </>
+            }
             <p className="mt-3 max-w-xs text-sm leading-6 text-[#2e2804cc] dark:text-[#e5dfd2cc]">
               Helping loving families find their perfect pets with safe adoption and caring support.
             </p>
